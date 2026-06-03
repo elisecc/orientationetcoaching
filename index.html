@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Orientation & Coaching — Accompagnement en orientation de carrière, transition professionnelle et recherche d'emploi. Clarifiez votre direction avec stratégie et confiance." />
+  <title>Orientation & Coaching</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <header class="nav-header">
+    <nav class="nav container">
+      <a href="#" class="nav-logo" aria-label="Orientation & Coaching — Accueil">
+        <svg class="logo-oc logo-oc-nav" viewBox="0 0 200 90" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <text x="57" y="56" text-anchor="middle" font-family="Montserrat,'Helvetica Neue',Arial,sans-serif" font-size="70" font-weight="800" fill="white">O</text>
+          <circle cx="100" cy="31" r="7" fill="#D9A21B"/>
+          <text x="143" y="56" text-anchor="middle" font-family="Montserrat,'Helvetica Neue',Arial,sans-serif" font-size="70" font-weight="800" fill="white">C</text>
+          <line x1="70" y1="67" x2="130" y2="67" stroke="white" stroke-width="2" stroke-opacity="0.25"/>
+          <text x="100" y="84" text-anchor="middle" font-family="Montserrat,'Helvetica Neue',Arial,sans-serif" font-size="17" font-weight="300" fill="white" fill-opacity="0.78">Orientation &amp; coaching</text>
+        </svg>
+      </a>
+      <button class="nav-toggle" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#approche">Approche</a></li>
+        <li><a href="#a-propos">À propos</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="https://calendar.app.google/p2xCZ4nW8L9GJ8X77" target="_blank" rel="noopener" class="btn btn-primary nav-cta">Réserver</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ═══════════════════════════════════════════
+         HERO — deux colonnes
+    ════════════════════════════════════════════ -->
+    <section class="hero-new" id="accueil">
+      <div class="container hero-new-grid">
+
+        <div class="hero-left">
+          <p class="hero-eyebrow-tag">Orientation · Transition · Recherche d'emploi</p>
+          <h1 class="hero-h1">Des choix professionnels<br />alignés avec qui vous êtes réellement.</h1>
+          <p class="hero-body-text">Accompagnement humain, structuré et profondément réfléchi pour vous aider à avancer avec clarté, stratégie et confiance.</p>
+          <div class="hero-actions">
+            <a href="https://calendar.app.google/p2xCZ4nW8L9GJ8X77" target="_blank" rel="noopener" class="btn btn-gold">Première rencontre gratuite — 30 minutes</a>
+            <a href="#services" class="btn btn-ghost">Découvrir les services</a>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="quiz-teaser" id="quiz-teaser">
+            <h2 class="qtc-title">Où en êtes-vous dans votre carrière&nbsp;?</h2>
+            <p class="qtc-body">Répondez à quelques questions et recevez une recommandation personnalisée selon votre situation actuelle.</p>
+            <div class="qtc-chips">
+              <span class="qtc-chip">
+                <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.3"/><path d="M7 4v3.5l2.5 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+                ≈&nbsp;5 minutes
+              </span>
+              <span class="qtc-chip">
+                <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7l3 3 6-6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Résultat immédiat
+              </span>
+            </div>
+            <button class="btn btn-gold qtc-cta" id="quiz-teaser-btn" type="button">
+              Faire le quiz maintenant <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         QUIZ — section complète
+    ════════════════════════════════════════════ -->
+    <section class="section-quiz" id="quiz">
+      <div class="container">
+
+        <div class="quiz-intro">
+          <h2 class="quiz-intro-title">Où en êtes-vous dans votre carrière&nbsp;?</h2>
+          <p class="quiz-intro-text">Répondez honnêtement — il n'y a pas de bonne ou mauvaise réponse. Le résultat est là pour vous aider à y voir plus clair.</p>
+        </div>
+
+        <div class="quiz-shell">
+
+          <div class="quiz-card" id="quiz-card">
+            <div class="quiz-progress-area">
+              <div class="quiz-progress-row">
+                <span class="quiz-progress-label" id="quiz-progress-label">Question 1 / 10</span>
+                <span class="quiz-progress-pct" id="quiz-progress-pct">10&nbsp;%</span>
+              </div>
+              <div class="quiz-progress-track">
+                <div class="quiz-progress-fill" id="quiz-progress-fill" style="width:10%"></div>
+              </div>
+            </div>
+
+            <div class="quiz-body" id="quiz-body">
+              <h3 class="quiz-question-text" id="quiz-question-text"></h3>
+              <div class="quiz-options" id="quiz-options"></div>
+            </div>
+
+            <div class="quiz-footer-nav">
+              <button class="quiz-next-btn" id="quiz-next-btn" type="button" disabled>
+                <span class="quiz-btn-label">Question suivante</span>
+                <span class="quiz-btn-arrow" aria-hidden="true">→</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="quiz-info-card" id="quiz-info-card" hidden>
+            <div class="qinfo-header">
+              <span class="qinfo-eyebrow">Votre résultat est prêt</span>
+              <h3 class="qinfo-title">Recevez votre recommandation personnalisée</h3>
+              <p class="qinfo-body">Entrez vos coordonnées pour découvrir la démarche recommandée selon votre profil.</p>
+            </div>
+            <form class="qinfo-form" id="quiz-info-form" novalidate>
+              <div class="qinfo-fields">
+                <input class="qinfo-input" type="text"  name="prenom"   placeholder="Prénom"   required autocomplete="given-name" />
+                <input class="qinfo-input" type="text"  name="nom"      placeholder="Nom"      required autocomplete="family-name" />
+                <input class="qinfo-input" type="email" name="courriel" placeholder="Courriel" required autocomplete="email" />
+              </div>
+              <button type="submit" class="btn btn-gold qinfo-submit">Voir mon résultat →</button>
+              <p class="consent-text">En soumettant ce formulaire, vous acceptez d'être contacté·e par courriel au sujet de votre demande, de votre résultat au quiz ou de votre démarche d'accompagnement. Vous pouvez vous désabonner ou demander le retrait de vos informations en tout temps.</p>
+            </form>
+          </div>
+
+          <div class="quiz-result-card" id="quiz-result-card" hidden></div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         SERVICES
+    ════════════════════════════════════════════ -->
+    <section class="section services" id="services">
+      <div class="container">
+        <div class="section-header reveal">
+          <p class="section-eyebrow">Ce que je propose</p>
+          <h2>Des services pensés<br />pour vous, là où vous en êtes.</h2>
+        </div>
+        <div class="services-grid">
+
+          <div class="service-card reveal" id="service-orientation">
+            <div class="service-header">
+              <div class="service-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.5"/>
+                  <circle cx="12" cy="12" r="2.5" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M12 2.5v3.5M12 18v3.5M2.5 12H6M18 12h3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <h3>Orientation et clarification professionnelle</h3>
+            </div>
+            <p>Une démarche personnalisée pour mieux comprendre ce qui vous motive réellement, clarifier vos intérêts, vos valeurs et identifier des pistes professionnelles alignées avec votre situation actuelle.</p>
+          </div>
+
+          <div class="service-card reveal reveal-delay-1" id="service-transition">
+            <div class="service-header">
+              <div class="service-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M3 12h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  <path d="M14 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M3 6c0 3.31 3 6 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2.5 2"/>
+                </svg>
+              </div>
+              <h3>Transition professionnelle</h3>
+            </div>
+            <p>Un accompagnement pour les personnes qui souhaitent effectuer un changement professionnel, structurer leur réflexion et transformer leurs idées en plan d'action concret.</p>
+          </div>
+
+          <div class="service-card reveal reveal-delay-2" id="service-emploi">
+            <div class="service-header">
+              <div class="service-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <rect x="2" y="7" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  <path d="M8 14h8M8 17.5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <h3>Recherche d'emploi, CV et entrevues</h3>
+            </div>
+            <p>Un accompagnement stratégique pour optimiser votre positionnement professionnel, améliorer vos outils et augmenter vos chances d'obtenir un emploi aligné avec vos objectifs.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         APPROCHE
+    ════════════════════════════════════════════ -->
+    <section class="section approche" id="approche">
+      <div class="container">
+        <div class="approche-inner">
+          <div class="approche-text reveal">
+            <p class="section-eyebrow">Mon approche</p>
+            <h2>L'orientation, c'est bien plus que trouver un métier.</h2>
+            <p class="approche-body">C'est comprendre qui vous êtes vraiment — vos valeurs, vos intérêts, votre personnalité, vos besoins et vos aspirations — pour construire une direction qui vous ressemble durablement.</p>
+            <p class="approche-body">Mon approche est à la fois humaine et stratégique. Je ne vous donne pas des réponses toutes faites. Je vous aide à trouver les vôtres.</p>
+          </div>
+          <div class="approche-pillars reveal reveal-delay">
+            <div class="pillar"><span class="pillar-label">Valeurs</span></div>
+            <div class="pillar"><span class="pillar-label">Intérêts</span></div>
+            <div class="pillar"><span class="pillar-label">Personnalité</span></div>
+            <div class="pillar"><span class="pillar-label">Besoins</span></div>
+            <div class="pillar"><span class="pillar-label">Aspirations</span></div>
+            <div class="pillar"><span class="pillar-label">Réalité de vie</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         PROCESSUS
+    ════════════════════════════════════════════ -->
+    <section class="section processus" id="processus">
+      <div class="container">
+        <div class="section-header reveal">
+          <p class="section-eyebrow">Comment ça fonctionne</p>
+          <h2>Un processus clair,<br />à votre rythme.</h2>
+        </div>
+        <div class="steps">
+          <div class="step reveal">
+            <div class="step-number">01</div>
+            <h3>Explorer</h3>
+            <p>Ensemble, on fait le point sur votre situation actuelle, vos expériences et ce qui vous a amené ici.</p>
+          </div>
+          <div class="step-connector" aria-hidden="true"></div>
+          <div class="step reveal reveal-delay-1">
+            <div class="step-number">02</div>
+            <h3>Comprendre</h3>
+            <p>On plonge dans ce qui vous anime réellement : vos forces, vos valeurs, votre style de travail idéal.</p>
+          </div>
+          <div class="step-connector" aria-hidden="true"></div>
+          <div class="step reveal reveal-delay-2">
+            <div class="step-number">03</div>
+            <h3>Structurer</h3>
+            <p>On construit ensemble une direction claire et des pistes concrètes adaptées à votre réalité.</p>
+          </div>
+          <div class="step-connector" aria-hidden="true"></div>
+          <div class="step reveal reveal-delay-3">
+            <div class="step-number">04</div>
+            <h3>Passer à l'action</h3>
+            <p>Vous repartez avec un plan, de la clarté et la confiance pour avancer dans la bonne direction.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         À PROPOS
+    ════════════════════════════════════════════ -->
+    <section class="section a-propos" id="a-propos">
+      <div class="container">
+        <div class="apropos-inner">
+          <div class="apropos-image reveal">
+            <img src="elise.jpg" alt="Élise, professionnelle en développement de carrière" class="apropos-photo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+            <div class="image-placeholder" style="display:none;">
+              <div class="image-placeholder-inner">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="12" r="6" stroke="#7FA8A1" stroke-width="1.5"/><path d="M4 28c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="#7FA8A1" stroke-width="1.5" stroke-linecap="round"/></svg>
+                <p>elise.jpg</p>
+              </div>
+            </div>
+          </div>
+          <div class="apropos-text reveal reveal-delay">
+            <p class="section-eyebrow">À propos</p>
+            <h2>Bonjour, je m'appelle Élise.</h2>
+            <p class="apropos-body">Je suis professionnelle en développement de carrière et candidate au titre de conseillère en orientation. J'accompagne des personnes à des moments charnières de leur parcours professionnel avec une approche humaine, structurée et profondément réfléchie.</p>
+            <p class="apropos-body">Mon travail repose sur une conviction simple : les meilleures décisions de carrière viennent d'abord de la connaissance de soi.</p>
+            <ul class="apropos-credentials">
+              <li>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="#D9A21B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Expérience en recrutement et chasse de tête
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="#D9A21B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Développement et évaluation de compétences
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="#D9A21B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Utilisation d'outils psychométriques validés
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="#D9A21B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Connaissance approfondie du marché de l'emploi
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="#D9A21B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Accompagnement d'une clientèle variée
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         FAQ
+    ════════════════════════════════════════════ -->
+    <section class="section faq" id="faq">
+      <div class="container faq-container">
+        <div class="section-header reveal">
+          <p class="section-eyebrow">Questions fréquentes</p>
+          <h2>Ce que vous vous demandez peut-être.</h2>
+        </div>
+        <div class="faq-list reveal">
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              Comment fonctionne une démarche d'orientation ?
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-answer"><div>
+              <p>Chaque démarche commence par une rencontre exploratoire pour comprendre votre situation, vos objectifs et ce dont vous avez besoin. On établit ensuite un plan d'accompagnement personnalisé selon votre rythme et vos besoins spécifiques.</p>
+            </div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              Combien de rencontres sont nécessaires ?
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-answer"><div>
+              <p>Le nombre de rencontres est déterminé ensemble au début de la démarche, puis ajusté tout au long du processus selon vos besoins et votre évolution. Mon objectif est de vous aider à vous sentir de plus en plus confortable, confiant et aligné dans vos choix professionnels.</p>
+            </div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              Les rencontres se font-elles en ligne ?
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-answer"><div>
+              <p>Oui, les séances se déroulent en ligne via une plateforme de visioconférence. Cela vous permet de consulter depuis l'endroit de votre choix, en toute flexibilité.</p>
+            </div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              Faites-vous passer des tests psychométriques ?
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-answer"><div>
+              <p>Oui, des outils psychométriques validés peuvent être intégrés à la démarche selon vos besoins. Ces tests permettent d'approfondir la connaissance de soi et d'orienter la réflexion avec des données concrètes sur votre profil.</p>
+            </div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              Pouvez-vous m'aider à améliorer mon CV ?
+              <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-answer"><div>
+              <p>Absolument. L'accompagnement en recherche d'emploi inclut la révision et l'optimisation du CV, la préparation aux entrevues et le développement d'une stratégie de recherche efficace adaptée à vos objectifs.</p>
+            </div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         CTA FINAL
+    ════════════════════════════════════════════ -->
+    <section class="section cta-final" id="cta-section">
+      <div class="container">
+        <div class="cta-inner reveal">
+          <p class="section-eyebrow light">Prêt·e à commencer ?</p>
+          <h2 class="cta-headline">Vous n'avez pas besoin d'avoir toutes les réponses avant de commencer.</h2>
+          <p class="cta-subtext">La première étape, c'est simplement d'en parler. Je vous accompagne à partir de là où vous êtes.</p>
+          <a href="https://calendar.app.google/p2xCZ4nW8L9GJ8X77" target="_blank" rel="noopener" class="btn btn-gold btn-large">Première rencontre gratuite — 30 minutes</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         ME REJOINDRE — Formulaire de contact
+    ════════════════════════════════════════════ -->
+    <section class="section contact-section" id="contact">
+      <div class="container">
+        <div class="section-header reveal">
+          <p class="section-eyebrow">Me rejoindre</p>
+          <h2>Envoyez-moi un message</h2>
+          <p class="contact-intro">Vous avez une question, une hésitation ou souhaitez simplement en savoir plus ? Je vous réponds personnellement dans les plus brefs délais.</p>
+        </div>
+
+        <div class="contact-wrapper reveal reveal-delay">
+          <form class="contact-form" id="contact-form" novalidate>
+            <div class="contact-row">
+              <div class="contact-group">
+                <label class="contact-label" for="cf-prenom">Prénom</label>
+                <input class="contact-input" type="text" id="cf-prenom" name="prenom" placeholder="Votre prénom" required autocomplete="given-name" />
+              </div>
+              <div class="contact-group">
+                <label class="contact-label" for="cf-nom">Nom</label>
+                <input class="contact-input" type="text" id="cf-nom" name="nom" placeholder="Votre nom" required autocomplete="family-name" />
+              </div>
+            </div>
+            <div class="contact-group">
+              <label class="contact-label" for="cf-courriel">Adresse courriel</label>
+              <input class="contact-input" type="email" id="cf-courriel" name="courriel" placeholder="votre@courriel.com" required autocomplete="email" />
+            </div>
+            <div class="contact-group">
+              <label class="contact-label" for="cf-motif">Motif du message</label>
+              <select class="contact-input contact-select" id="cf-motif" name="motif" required>
+                <option value="">Sélectionnez un motif…</option>
+                <option value="Orientation professionnelle">Orientation professionnelle</option>
+                <option value="Transition de carrière">Transition de carrière</option>
+                <option value="Recherche d'emploi">Recherche d'emploi</option>
+                <option value="Renseignements généraux">Renseignements généraux</option>
+                <option value="Autre">Autre</option>
+              </select>
+            </div>
+            <div class="contact-group">
+              <label class="contact-label" for="cf-message">Message</label>
+              <textarea class="contact-input contact-textarea" id="cf-message" name="message" placeholder="Décrivez votre situation ou votre question…" required rows="5"></textarea>
+            </div>
+            <div class="form-consent">
+              <p class="consent-text">En soumettant ce formulaire, vous acceptez d'être contacté·e par courriel au sujet de votre demande, de votre résultat au quiz ou de votre démarche d'accompagnement. Vous pouvez vous désabonner ou demander le retrait de vos informations en tout temps.</p>
+            </div>
+            <button type="submit" class="btn btn-gold contact-submit">Envoyer mon message →</button>
+          </form>
+
+          <div class="contact-success" id="contact-success" hidden>
+            <div class="contact-success-icon" aria-hidden="true">✓</div>
+            <h3 class="contact-success-title">Merci pour votre message.</h3>
+            <p class="contact-success-text">Je vous répondrai dès que possible.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="#" class="footer-logo" aria-label="Orientation & Coaching — Accueil">
+          <svg class="logo-oc logo-oc-footer" viewBox="0 0 200 90" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <text x="57" y="56" text-anchor="middle" font-family="Montserrat,'Helvetica Neue',Arial,sans-serif" font-size="70" font-weight="800" fill="white">O</text>
+            <circle cx="100" cy="31" r="7" fill="#D9A21B"/>
+            <text x="143" y="56" text-anchor="middle" font-family="Montserrat,'Helvetica Neue',Arial,sans-serif" font-size="70" font-weight="800" fill="white">C</text>
+            <line x1="70" y1="67" x2="130" y2="67" stroke="white" stroke-width="2" stroke-opacity="0.25"/>
+            <text x="100" y="84" text-anchor="middle" font-family="Montserrat,'Helvetica Neue',Arial,sans-serif" font-size="17" font-weight="300" fill="white" fill-opacity="0.78">Orientation &amp; coaching</text>
+          </svg>
+        </a>
+        <p class="footer-tagline">Clarifier votre direction professionnelle avec stratégie et confiance.</p>
+        <a href="mailto:elisecc@orientationetcoaching.com" class="footer-email">elisecc@orientationetcoaching.com</a>
+      </div>
+      <nav class="footer-nav" aria-label="Navigation secondaire">
+        <ul>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#approche">Approche</a></li>
+          <li><a href="#a-propos">À propos</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="footer-bottom container">
+      <p>&copy; 2026 Orientation & Coaching. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="quiz.js"></script>
+  <script>
+  /*
+  ================================================================
+  FORMULAIRE DE CONTACT — CONFIGURATION
+  ================================================================
+  Pour activer l'envoi de messages par courriel :
+
+  Option 1 — Formspree (recommandé, gratuit) :
+    1. Aller sur formspree.io → créer un compte
+    2. Créer un nouveau formulaire → indiquer elisecc@orientationetcoaching.com
+    3. Copier l'URL fournie (ex : https://formspree.io/f/xxxxxx)
+    4. La coller dans CONTACT_URL ci-dessous
+
+  Option 2 — Google Apps Script :
+    1. Aller sur script.google.com → créer un nouveau script
+    2. Remplacer le contenu par :
+
+       function doPost(e) {
+         var data = JSON.parse(e.postData.contents);
+         MailApp.sendEmail({
+           to: 'elisecc@orientationetcoaching.com',
+           replyTo: data.courriel,
+           subject: 'Nouveau message — ' + data.motif,
+           body: 'Prénom : ' + data.prenom + '\nNom : ' + data.nom +
+                 '\nCourriel : ' + data.courriel + '\nMotif : ' + data.motif +
+                 '\nDate : ' + data.date + '\n\nMessage :\n' + data.message
+         });
+         return ContentService
+           .createTextOutput(JSON.stringify({ status: 'ok' }))
+           .setMimeType(ContentService.MimeType.JSON);
+       }
+
+    3. Déployer → Nouveau déploiement → Application Web
+       Exécuter en tant que : Moi — Accès : Tout le monde
+    4. Copier l'URL et la coller dans CONTACT_URL ci-dessous
+  ================================================================ */
+  (function () {
+    var CONTACT_URL = ''; // ← votre URL ici (Formspree ou Apps Script)
+
+    var form       = document.getElementById('contact-form');
+    var successBox = document.getElementById('contact-success');
+    if (!form || !successBox) return;
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      var valid = true;
+      form.querySelectorAll('.contact-input').forEach(function (el) {
+        el.classList.remove('contact-input-err');
+        if (!el.value.trim()) { el.classList.add('contact-input-err'); valid = false; }
+      });
+      var courrielEl = form.querySelector('[name="courriel"]');
+      if (courrielEl.value && !courrielEl.value.includes('@')) {
+        courrielEl.classList.add('contact-input-err'); valid = false;
+      }
+      if (!valid) return;
+
+      var submitBtn = form.querySelector('.contact-submit');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Envoi en cours…';
+
+      function showSuccess() {
+        form.hidden = true;
+        successBox.hidden = false;
+        successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
+      if (!CONTACT_URL) { showSuccess(); return; }
+
+      fetch(CONTACT_URL, {
+        method:  'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prenom:   form.querySelector('[name="prenom"]').value.trim(),
+          nom:      form.querySelector('[name="nom"]').value.trim(),
+          courriel: courrielEl.value.trim(),
+          motif:    form.querySelector('[name="motif"]').value,
+          message:  form.querySelector('[name="message"]').value.trim(),
+          date:     new Date().toLocaleString('fr-CA')
+        })
+      })
+      .then(showSuccess)
+      .catch(showSuccess);
+    });
+  })();
+  </script>
+</body>
+</html>
