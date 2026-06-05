@@ -66,7 +66,7 @@
     {
       text: "Qu'est-ce qui vous bloque le plus actuellement ?",
       options: [
-        { text: "Le manque de clarté", program: 'voie' },
+        { text: "Je manque de clarté dans ma carrière", program: 'voie' },
         { text: "La peur de faire le mauvais choix", program: 'clarifier' },
         { text: "Le manque de structure ou de motivation", program: 'clarifier' },
         { text: "Le manque de réponses des employeurs", program: 'emploi' }
@@ -82,15 +82,6 @@
       ]
     },
     {
-      text: "Où en êtes-vous actuellement ?",
-      options: [
-        { text: "En questionnement personnel", program: 'voie' },
-        { text: "En exploration de nouvelles options", program: 'clarifier' },
-        { text: "En transition concrète", program: 'clarifier' },
-        { text: "En recherche active d'emploi", program: 'emploi' }
-      ]
-    },
-    {
       text: "Quel type d'aide vous aiderait le plus ?",
       options: [
         { text: "Une démarche pour mieux me comprendre", program: 'voie' },
@@ -100,7 +91,7 @@
       ]
     },
     {
-      text: "Si vous pouviez régler UNE chose aujourd'hui, ce serait …",
+      text: "Si vous pouviez régler UNE chose aujourd'hui, ce serait de…",
       options: [
         { text: "Comprendre ce qui me correspond vraiment", program: 'voie' },
         { text: "Savoir quelle direction choisir", program: 'clarifier' },
@@ -116,7 +107,7 @@
   const RESULTS = {
     voie: {
       profileTitle: "En réflexion professionnelle",
-      emotionalIntro: "Vous semblez être dans une période où quelque chose ne vous convient plus complètement professionnellement, mais où il peut encore être difficile d'identifier exactement ce qui devrait changer.",
+      emotionalIntro: "Vous semblez être dans une période où quelque chose ne vous convient plus professionnellement, mais où il peut encore être difficile d'identifier exactement ce qui devrait changer.",
       emotionalBulletPrelude: "Vous ressentez peut-être :",
       emotionalBullets: [
         "un manque de clarté",
@@ -214,12 +205,8 @@
       this.selected     = null;
       this.answers      = [];
       this.resultKey    = null;
-      this.userPrenom   = '';
-      this.userNom      = '';
-      this.userCourriel = '';
 
       this.$card       = document.getElementById('quiz-card');
-      this.$infoCard   = document.getElementById('quiz-info-card');
       this.$resultCard = document.getElementById('quiz-result-card');
       this.$fill       = document.getElementById('quiz-progress-fill');
       this.$label      = document.getElementById('quiz-progress-label');
@@ -301,13 +288,15 @@
 
       if (this.current >= QUESTIONS.length) {
         this.resultKey = resolveWinner(this.scores);
-        this.showInfoGate();
+        this.showResult();
       } else {
         this.renderQuestion();
       }
     }
 
-    showInfoGate() {
+    showResult() {
+      const data = RESULTS[this.resultKey];
+
       this.$fill.style.width  = '100%';
       this.$label.textContent = 'Votre résultat est prêt ✓';
       this.$pct.textContent   = '100 %';
@@ -315,72 +304,14 @@
       this.$card.classList.add('q-fade-out');
       setTimeout(() => {
         this.$card.hidden = true;
-        this.$infoCard.hidden = false;
-        this.$infoCard.classList.add('q-fade-in');
-
-        setTimeout(() => {
-          this.$infoCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 100);
-
-        const form = document.getElementById('quiz-info-form');
-        if (form) form.addEventListener('submit', e => this.submitInfo(e));
-      }, 300);
-    }
-
-    submitInfo(e) {
-      e.preventDefault();
-      const form     = e.target;
-      const prenom   = form.prenom.value.trim();
-      const nom      = form.nom.value.trim();
-      const courriel = form.courriel.value.trim();
-      let valid = true;
-
-      form.querySelectorAll('.qinfo-input').forEach(inp => {
-        inp.classList.remove('qinfo-input-err');
-        if (!inp.value.trim()) { inp.classList.add('qinfo-input-err'); valid = false; }
-      });
-      if (courriel && !courriel.includes('@')) {
-        form.courriel.classList.add('qinfo-input-err');
-        valid = false;
-      }
-      if (!valid) return;
-
-      this.userPrenom   = prenom;
-      this.userNom      = nom;
-      this.userCourriel = courriel;
-
-      if (SHEETS_URL) {
-        const payload = {
-          date:     new Date().toLocaleString('fr-CA'),
-          prenom:   prenom,
-          nom:      nom,
-          courriel: courriel,
-          resultat: RESULTS[this.resultKey]?.demarcheName || this.resultKey
-        };
-        this.answers.forEach((rep, i) => { payload['r' + (i + 1)] = rep; });
-
-        fetch(SHEETS_URL, {
-          method: 'POST',
-          body: JSON.stringify(payload)
-        }).catch(() => {});
-      }
-
-      this.showResult();
-    }
-
-    showResult() {
-      const data = RESULTS[this.resultKey];
-
-      this.$infoCard.classList.add('q-fade-out');
-      setTimeout(() => {
-        this.$infoCard.hidden = true;
         this.$resultCard.hidden = false;
         this.$resultCard.innerHTML = this.buildResult(data);
         this.$resultCard.classList.add('q-fade-in');
 
         setTimeout(() => {
-          this.$resultCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 100);
+          const top = this.$resultCard.getBoundingClientRect().top + window.scrollY - 90;
+          window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+        }, 150);
       }, 300);
     }
 
@@ -423,7 +354,7 @@
           <h4 class="res-prog-name">${data.demarcheName}</h4>
           <p class="res-prog-intro">Une démarche personnalisée pour vous aider à&nbsp;:</p>
           <ul class="res-benefits">${benefits}</ul>
-          <a href="https://calendar.app.google/p2xCZ4nW8L9GJ8X77" target="_blank" rel="noopener" class="btn res-cta-btn">Réserver ma rencontre gratuite de 30 minutes →</a>
+          <a href="https://calendar.app.google/p2xCZ4nW8L9GJ8X77" target="_blank" rel="noopener" class="btn res-cta-btn">Première rencontre gratuite (30 min.)</a>
         </div>
 
         <div class="res-comp-section">

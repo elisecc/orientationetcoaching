@@ -7,6 +7,5 @@
   <text x="57" y="56" text-anchor="middle" font-family="Montserrat, 'Helvetica Neue', Arial, sans-serif" font-size="70" font-weight="800" fill="white">O</text>
   <circle cx="100" cy="31" r="7" fill="#D9A21B"/>
   <text x="143" y="56" text-anchor="middle" font-family="Montserrat, 'Helvetica Neue', Arial, sans-serif" font-size="70" font-weight="800" fill="white">C</text>
-  <line x1="70" y1="67" x2="130" y2="67" stroke="white" stroke-width="2" stroke-opacity="0.25"/>
   <text x="100" y="84" text-anchor="middle" font-family="Montserrat, 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="300" fill="white" fill-opacity="0.78">Orientation &amp; coaching</text>
 </svg>
