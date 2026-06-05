@@ -131,7 +131,6 @@
           <p class="section-eyebrow">Ce que je propose</p>
           <h2>Des services pensés<br />pour vous, là où vous en êtes.</h2>
         </div>
-        <div class="services-mobile-titles" aria-hidden="true">Orientation | Transition | Recherche d'emploi</div>
         <div class="services-grid">
 
           <div class="service-card reveal" id="service-orientation">
@@ -492,7 +491,7 @@
     4. Copier l'URL et la coller dans CONTACT_URL ci-dessous
   ================================================================ */
   (function () {
-    var CONTACT_URL = ''; // ← votre URL ici (Formspree ou Apps Script)
+    var CONTACT_URL = 'https://formsubmit.co/ajax/elisecc@orientationetcoaching.com';
 
     var form       = document.getElementById('contact-form');
     var successBox = document.getElementById('contact-success');
@@ -533,7 +532,9 @@
           courriel: courrielEl.value.trim(),
           motif:    form.querySelector('[name="motif"]').value,
           message:  form.querySelector('[name="message"]').value.trim(),
-          date:     new Date().toLocaleString('fr-CA')
+          date:     new Date().toLocaleString('fr-CA'),
+          _replyto: courrielEl.value.trim(),
+          _subject: 'Nouveau message – ' + form.querySelector('[name="motif"]').value
         })
       })
       .then(showSuccess)
