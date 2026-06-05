@@ -21,7 +21,6 @@
           <text x="57" y="56" text-anchor="middle" font-family="Montserrat,'Helvetica Neue',Arial,sans-serif" font-size="70" font-weight="800" fill="white">O</text>
           <circle cx="100" cy="31" r="7" fill="#D9A21B"/>
           <text x="143" y="56" text-anchor="middle" font-family="Montserrat,'Helvetica Neue',Arial,sans-serif" font-size="70" font-weight="800" fill="white">C</text>
-          <line x1="70" y1="67" x2="130" y2="67" stroke="white" stroke-width="2" stroke-opacity="0.25"/>
           <text x="100" y="84" text-anchor="middle" font-family="Montserrat,'Helvetica Neue',Arial,sans-serif" font-size="17" font-weight="300" fill="white" fill-opacity="0.78">Orientation &amp; coaching</text>
         </svg>
       </a>
@@ -88,7 +87,7 @@
 
         <div class="quiz-intro">
           <h2 class="quiz-intro-title">Où en êtes-vous dans votre carrière&nbsp;?</h2>
-          <p class="quiz-intro-text">Répondez honnêtement — il n'y a pas de bonne ou mauvaise réponse. Le résultat est là pour vous aider à y voir plus clair.</p>
+          <p class="quiz-intro-text">Répondez honnêtement, il n'y a pas de bonne ou mauvaise réponse. Le résultat est là pour vous aider à y voir plus clair.</p>
         </div>
 
         <div class="quiz-shell">
@@ -117,23 +116,6 @@
             </div>
           </div>
 
-          <div class="quiz-info-card" id="quiz-info-card" hidden>
-            <div class="qinfo-header">
-              <span class="qinfo-eyebrow">Votre résultat est prêt</span>
-              <h3 class="qinfo-title">Recevez votre recommandation personnalisée</h3>
-              <p class="qinfo-body">Entrez vos coordonnées pour découvrir la démarche recommandée selon votre profil.</p>
-            </div>
-            <form class="qinfo-form" id="quiz-info-form" novalidate>
-              <div class="qinfo-fields">
-                <input class="qinfo-input" type="text"  name="prenom"   placeholder="Prénom"   required autocomplete="given-name" />
-                <input class="qinfo-input" type="text"  name="nom"      placeholder="Nom"      required autocomplete="family-name" />
-                <input class="qinfo-input" type="email" name="courriel" placeholder="Courriel" required autocomplete="email" />
-              </div>
-              <button type="submit" class="btn btn-gold qinfo-submit">Voir mon résultat →</button>
-              <p class="consent-text">En soumettant ce formulaire, vous acceptez d'être contacté·e par courriel au sujet de votre demande, de votre résultat au quiz ou de votre démarche d'accompagnement. Vous pouvez vous désabonner ou demander le retrait de vos informations en tout temps.</p>
-            </form>
-          </div>
-
           <div class="quiz-result-card" id="quiz-result-card" hidden></div>
 
         </div>
@@ -149,6 +131,7 @@
           <p class="section-eyebrow">Ce que je propose</p>
           <h2>Des services pensés<br />pour vous, là où vous en êtes.</h2>
         </div>
+        <div class="services-mobile-titles" aria-hidden="true">Orientation | Transition | Recherche d'emploi</div>
         <div class="services-grid">
 
           <div class="service-card reveal" id="service-orientation">
@@ -162,7 +145,8 @@
               </div>
               <h3>Orientation et clarification professionnelle</h3>
             </div>
-            <p>Une démarche personnalisée pour mieux comprendre ce qui vous motive réellement, clarifier vos intérêts, vos valeurs et identifier des pistes professionnelles alignées avec votre situation actuelle.</p>
+            <p>Une démarche personnalisée pour mieux comprendre ce qui vous motive réellement, clarifier vos options et identifier des pistes professionnelles alignées avec votre situation actuelle.</p>
+            <p class="service-objectif"><strong>Objectif :</strong> Apprendre à mieux se connaître.</p>
           </div>
 
           <div class="service-card reveal reveal-delay-1" id="service-transition">
@@ -177,6 +161,7 @@
               <h3>Transition professionnelle</h3>
             </div>
             <p>Un accompagnement pour les personnes qui souhaitent effectuer un changement professionnel, structurer leur réflexion et transformer leurs idées en plan d'action concret.</p>
+            <p class="service-objectif"><strong>Objectif :</strong> Développer un plan d'action concret.</p>
           </div>
 
           <div class="service-card reveal reveal-delay-2" id="service-emploi">
@@ -190,7 +175,8 @@
               </div>
               <h3>Recherche d'emploi, CV et entrevues</h3>
             </div>
-            <p>Un accompagnement stratégique pour optimiser votre positionnement professionnel, améliorer vos outils et augmenter vos chances d'obtenir un emploi aligné avec vos objectifs.</p>
+            <p>Un accompagnement stratégique pour optimiser votre positionnement professionnel et augmenter vos chances d'obtenir un emploi aligné avec vos objectifs.</p>
+            <p class="service-objectif"><strong>Objectif :</strong> Développer une stratégie de recherche d'emploi efficace.</p>
           </div>
 
         </div>
@@ -206,7 +192,7 @@
           <div class="approche-text reveal">
             <p class="section-eyebrow">Mon approche</p>
             <h2>L'orientation, c'est bien plus que trouver un métier.</h2>
-            <p class="approche-body">C'est comprendre qui vous êtes vraiment — vos valeurs, vos intérêts, votre personnalité, vos besoins et vos aspirations — pour construire une direction qui vous ressemble durablement.</p>
+            <p class="approche-body">C'est comprendre qui vous êtes vraiment afin de construire une direction professionnelle qui vous ressemble.</p>
             <p class="approche-body">Mon approche est à la fois humaine et stratégique. Je ne vous donne pas des réponses toutes faites. Je vous aide à trouver les vôtres.</p>
           </div>
           <div class="approche-pillars reveal reveal-delay">
@@ -446,7 +432,6 @@
             <text x="57" y="56" text-anchor="middle" font-family="Montserrat,'Helvetica Neue',Arial,sans-serif" font-size="70" font-weight="800" fill="white">O</text>
             <circle cx="100" cy="31" r="7" fill="#D9A21B"/>
             <text x="143" y="56" text-anchor="middle" font-family="Montserrat,'Helvetica Neue',Arial,sans-serif" font-size="70" font-weight="800" fill="white">C</text>
-            <line x1="70" y1="67" x2="130" y2="67" stroke="white" stroke-width="2" stroke-opacity="0.25"/>
             <text x="100" y="84" text-anchor="middle" font-family="Montserrat,'Helvetica Neue',Arial,sans-serif" font-size="17" font-weight="300" fill="white" fill-opacity="0.78">Orientation &amp; coaching</text>
           </svg>
         </a>
@@ -556,5 +541,6 @@
     });
   })();
   </script>
+
 </body>
 </html>
