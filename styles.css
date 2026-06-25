@@ -843,6 +843,16 @@ button.btn { border: none; cursor: pointer; appearance: none; font-family: var(-
   margin-top: 3px;
 }
 
+.apropos-signature {
+  margin-top: 24px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--deep-teal);
+  letter-spacing: 0.01em;
+  padding-top: 18px;
+  border-top: 1px solid var(--light-gray);
+}
+
 /* ============================================
    TESTIMONIALS
    ============================================ */

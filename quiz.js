@@ -1,36 +1,30 @@
 (function () {
   'use strict';
 
-  /*
-  ================================================================
-  GOOGLE SHEETS — CONFIGURATION
-  ================================================================
-  Pour activer la sauvegarde des données :
-  1. Aller sur sheet.new → créer un Google Sheet "Quiz Orientation"
-  2. Ajouter les en-têtes en ligne 1 :
-     Date | Prénom | Nom | Courriel | Résultat | Q1 | Q2 | Q3 | Q4 | Q5 | Q6 | Q7 | Q8 | Q9 | Q10
-  3. Extensions → Apps Script → coller le code suivant :
+  /* ============================================================
+     GOOGLE SHEETS — COMPILATION DES RÉSULTATS DU QUIZ
+     ============================================================
+     Coller ici l'URL de votre Google Apps Script Web App
+     (ex : https://script.google.com/macros/s/XXXX.../exec)
+     Laisser vide pour désactiver l'envoi.
+  ============================================================ */
+  const QUIZ_RESULTS_ENDPOINT = ''; // ← coller votre URL ici
 
-     function doPost(e) {
-       var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-       var data  = JSON.parse(e.postData.contents);
-       var row   = [
-         data.date, data.prenom, data.nom, data.courriel, data.resultat,
-         data.r1, data.r2, data.r3, data.r4, data.r5,
-         data.r6, data.r7, data.r8, data.r9, data.r10
-       ];
-       sheet.appendRow(row);
-       return ContentService
-         .createTextOutput(JSON.stringify({ status: 'ok' }))
-         .setMimeType(ContentService.MimeType.JSON);
-     }
-
-  4. Déployer → Nouveau déploiement → Application Web
-     - Exécuter en tant que : Moi
-     - Accès : Tout le monde
-  5. Copier l'URL et la coller dans SHEETS_URL ci-dessous.
-  ================================================================ */
-  var SHEETS_URL = ''; // ← votre URL Google Apps Script ici
+  function submitQuizResultsToSheet(payload) {
+    if (!QUIZ_RESULTS_ENDPOINT) return; // pas configuré — rien à faire
+    try {
+      fetch(QUIZ_RESULTS_ENDPOINT, {
+        method:  'POST',
+        mode:    'no-cors',      // requis pour Google Apps Script cross-origin
+        headers: { 'Content-Type': 'text/plain' }, // évite le preflight CORS
+        body:    JSON.stringify(payload)
+      }).catch(function () {
+        // Échec silencieux — le quiz continue normalement
+      });
+    } catch (err) {
+      // Ne jamais bloquer l'affichage du résultat
+    }
+  }
 
   /* ============================================================
      QUESTIONS
@@ -296,6 +290,17 @@
 
     showResult() {
       const data = RESULTS[this.resultKey];
+
+      // ── Envoyer les résultats vers Google Sheets ──────────────
+      submitQuizResultsToSheet({
+        timestamp:    new Date().toLocaleString('fr-CA'),
+        result:       this.resultKey,
+        profileTitle: data.profileTitle,
+        answers:      this.answers,
+        scores:       this.scores,
+        pageUrl:      window.location.href,
+        userAgent:    navigator.userAgent
+      });
 
       this.$fill.style.width  = '100%';
       this.$label.textContent = 'Votre résultat est prêt ✓';
