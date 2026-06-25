@@ -2,28 +2,31 @@
   'use strict';
 
   /* ============================================================
-     GOOGLE SHEETS — COMPILATION DES RÉSULTATS DU QUIZ
-     ============================================================
-     Coller ici l'URL de votre Google Apps Script Web App
-     https://script.google.com/macros/s/AKfycbxt7v3S-gbNcuXGbdnSLl5r7kJ8oo6Rtv9xraXlu6nU8tWm2iGr8IRKrjzCJgoMeoiwFw/exec
-     Laisser vide pour désactiver l'envoi.
+     ENVOI DES RÉSULTATS PAR COURRIEL — FORMSUBMIT
+     Chaque quiz complété envoie un courriel à l'adresse ci-dessous.
+     Aucune configuration supplémentaire requise.
   ============================================================ */
-  const QUIZ_RESULTS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxt7v3S-gbNcuXGbdnSLl5r7kJ8oo6Rtv9xraXlu6nU8tWm2iGr8IRKrjzCJgoMeoiwFw/exec';
+  var QUIZ_EMAIL = 'elisecc@orientationetcoaching.com';
 
   function submitQuizResultsToSheet(payload) {
-    if (!QUIZ_RESULTS_ENDPOINT) return;
+    if (!QUIZ_EMAIL) return;
     try {
-      // text/plain évite le preflight CORS (requête "simple").
-      // Une erreur CORS peut apparaître en console lors de la lecture de la
-      // réponse, mais les données sont bien reçues par le script Google.
-      fetch(QUIZ_RESULTS_ENDPOINT, {
-        method:   'POST',
-        redirect: 'follow',
-        headers:  { 'Content-Type': 'text/plain' },
-        body:     JSON.stringify(payload)
-      }).catch(function () {
-        // Échec silencieux — le quiz continue normalement
-      });
+      fetch('https://formsubmit.co/ajax/' + QUIZ_EMAIL, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          _subject:       'Résultat quiz — ' + payload.profileTitle,
+          _captcha:       'false',
+          Profil:         payload.profileTitle,
+          'Résultat':     payload.result,
+          'Date et heure':payload.timestamp,
+          'Réponses':     Array.isArray(payload.answers) ? payload.answers.join('\n') : payload.answers,
+          Scores:         'Orientation : ' + payload.scores.voie +
+                          ' | Transition : ' + payload.scores.clarifier +
+                          ' | Emploi : ' + payload.scores.emploi,
+          Page:           payload.pageUrl
+        })
+      }).catch(function () {});
     } catch (err) {
       // Ne jamais bloquer l'affichage du résultat
     }
