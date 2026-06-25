@@ -5,19 +5,22 @@
      GOOGLE SHEETS — COMPILATION DES RÉSULTATS DU QUIZ
      ============================================================
      Coller ici l'URL de votre Google Apps Script Web App
-     (ex : https://script.google.com/macros/s/XXXX.../exec)
+     https://script.google.com/macros/s/AKfycbxt7v3S-gbNcuXGbdnSLl5r7kJ8oo6Rtv9xraXlu6nU8tWm2iGr8IRKrjzCJgoMeoiwFw/exec
      Laisser vide pour désactiver l'envoi.
   ============================================================ */
-  const QUIZ_RESULTS_ENDPOINT = ''; // ← coller votre URL ici
+  const QUIZ_RESULTS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxt7v3S-gbNcuXGbdnSLl5r7kJ8oo6Rtv9xraXlu6nU8tWm2iGr8IRKrjzCJgoMeoiwFw/exec';
 
   function submitQuizResultsToSheet(payload) {
-    if (!QUIZ_RESULTS_ENDPOINT) return; // pas configuré — rien à faire
+    if (!QUIZ_RESULTS_ENDPOINT) return;
     try {
+      // text/plain évite le preflight CORS (requête "simple").
+      // Une erreur CORS peut apparaître en console lors de la lecture de la
+      // réponse, mais les données sont bien reçues par le script Google.
       fetch(QUIZ_RESULTS_ENDPOINT, {
-        method:  'POST',
-        mode:    'no-cors',      // requis pour Google Apps Script cross-origin
-        headers: { 'Content-Type': 'text/plain' }, // évite le preflight CORS
-        body:    JSON.stringify(payload)
+        method:   'POST',
+        redirect: 'follow',
+        headers:  { 'Content-Type': 'text/plain' },
+        body:     JSON.stringify(payload)
       }).catch(function () {
         // Échec silencieux — le quiz continue normalement
       });
