@@ -15,16 +15,16 @@
         method:  'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({
-          _subject:       'Résultat quiz — ' + payload.profileTitle,
-          _captcha:       'false',
-          Profil:         payload.profileTitle,
-          'Résultat':     payload.result,
-          'Date et heure':payload.timestamp,
-          'Réponses':     Array.isArray(payload.answers) ? payload.answers.join('\n') : payload.answers,
-          Scores:         'Orientation : ' + payload.scores.voie +
-                          ' | Transition : ' + payload.scores.clarifier +
-                          ' | Emploi : ' + payload.scores.emploi,
-          Page:           payload.pageUrl
+          _subject:  'Quiz — ' + payload.profileTitle,
+          _captcha:  'false',
+          Profil:    payload.profileTitle,
+          Resultat:  payload.result,
+          Date:      payload.timestamp,
+          Reponses:  Array.isArray(payload.answers) ? payload.answers.join(' | ') : payload.answers,
+          Scores:    'Orientation:' + payload.scores.voie +
+                     ' Transition:' + payload.scores.clarifier +
+                     ' Emploi:' + payload.scores.emploi,
+          Page:      payload.pageUrl
         })
       }).catch(function () {});
     } catch (err) {
