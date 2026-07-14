@@ -297,6 +297,12 @@
     showResult() {
       const data = RESULTS[this.resultKey];
 
+      // GA4 — quiz complété
+      gtag('event', 'quiz_completed', {
+        'event_category': 'Engagement',
+        'event_label': 'Quiz_carriere_complet'
+      });
+
       // ── Envoyer les résultats vers Google Sheets ──────────────
       submitQuizResultsToSheet({
         timestamp:    new Date().toLocaleString('fr-CA'),
