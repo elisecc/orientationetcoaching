@@ -799,7 +799,7 @@ button.btn { border: none; cursor: pointer; appearance: none; font-family: var(-
 .image-placeholder {
   width: 100%;
   max-width: 340px;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 7 / 10;
   background: var(--light-gray);
   border-radius: var(--radius-lg);
   display: flex;
@@ -821,7 +821,7 @@ button.btn { border: none; cursor: pointer; appearance: none; font-family: var(-
 .apropos-photo {
   width: 100%;
   max-width: 340px;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 7 / 10;
   border-radius: var(--radius-lg);
   object-fit: cover;
   object-position: center top;
