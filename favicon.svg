@@ -5,7 +5,7 @@
   <defs>
     <style>@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800&amp;display=swap');</style>
   </defs>
-  <text x="8" y="46" font-family="Montserrat, 'Helvetica Neue', Arial, sans-serif" font-size="30" font-weight="800" fill="white">O</text>
-  <circle cx="32" cy="34" r="4.5" fill="#D9A21B"/>
-  <text x="37" y="46" font-family="Montserrat, 'Helvetica Neue', Arial, sans-serif" font-size="30" font-weight="800" fill="white">C</text>
+  <text x="13" y="32" text-anchor="middle" dominant-baseline="central" font-family="Montserrat, 'Helvetica Neue', Arial, sans-serif" font-size="30" font-weight="800" fill="white">O</text>
+  <circle cx="32" cy="32" r="4" fill="#D9A21B"/>
+  <text x="51" y="32" text-anchor="middle" dominant-baseline="central" font-family="Montserrat, 'Helvetica Neue', Arial, sans-serif" font-size="30" font-weight="800" fill="white">C</text>
 </svg>
