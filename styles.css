@@ -824,7 +824,7 @@ button.btn { border: none; cursor: pointer; appearance: none; font-family: var(-
   aspect-ratio: 7 / 10;
   border-radius: var(--radius-lg);
   object-fit: cover;
-  object-position: center top;
+  object-position: center 35%;
   box-shadow: var(--shadow-md);
   display: block;
 }
