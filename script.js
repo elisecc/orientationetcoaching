@@ -71,19 +71,21 @@ document.querySelectorAll('.faq-answer').forEach(answer => {
   }
 });
 
-document.querySelectorAll('a[href*="calendar.app.google"]').forEach(function(btn) {
-  btn.addEventListener('click', function() {
-    // GA4 event
-    gtag('event', 'reservation_click', {
-      'event_category': 'CTA',
-      'event_label': 'Rencontre_gratuite_30min',
-      'value': 1
-    });
-    // Google Ads conversion
-    gtag('event', 'conversion', {
-      'send_to': 'AW-18323534468/F1mpCKzgtNAcEITlq6FE',
-      'value': 1.0,
-      'currency': 'CAD'
-    });
+document.addEventListener('click', function(e) {
+  var link = e.target.closest('a[href*="calendar.app.google"]');
+  if (!link) return;
+
+  // GA4 event
+  gtag('event', 'reservation_click', {
+    'event_category': 'CTA',
+    'event_label': 'Rencontre_gratuite_30min',
+    'value': 1
+  });
+
+  // Google Ads conversion
+  gtag('event', 'conversion', {
+    'send_to': 'AW-18323534468/F1mpCKzgtNAcEITlq6FE',
+    'value': 1.0,
+    'currency': 'CAD'
   });
 });
