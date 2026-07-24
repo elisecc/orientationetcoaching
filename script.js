@@ -82,10 +82,13 @@ document.addEventListener('click', function(e) {
     'value': 1
   });
 
-  // Google Ads conversion
-  gtag('event', 'conversion', {
-    'send_to': 'AW-18323534468/F1mpCKzgtNAcEITlq6FE',
-    'value': 1.0,
-    'currency': 'CAD'
-  });
+  // Google Ads conversion — une seule fois par visite, peu importe combien de boutons sont cliqués
+  if (!sessionStorage.getItem('ads_conversion_sent')) {
+    sessionStorage.setItem('ads_conversion_sent', '1');
+    gtag('event', 'conversion', {
+      'send_to': 'AW-18323534468/F1mpCKzgtNAcEITlq6FE',
+      'value': 1.0,
+      'currency': 'CAD'
+    });
+  }
 });
