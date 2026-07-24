@@ -371,7 +371,7 @@
           <h4 class="res-prog-name">${data.demarcheName}</h4>
           <p class="res-prog-intro">Une démarche personnalisée pour vous aider à&nbsp;:</p>
           <ul class="res-benefits">${benefits}</ul>
-          <a href="https://calendar.app.google/p2xCZ4nW8L9GJ8X77" target="_blank" rel="noopener" class="btn res-cta-btn">Première rencontre gratuite (30 min.)</a>
+          <a href="https://calendly.com/elisecc-orientationetcoaching/conseil-en-orientation-30-minutes" class="btn res-cta-btn">Première rencontre gratuite (30 min.)</a>
         </div>
 
         <div class="res-comp-section">

@@ -71,20 +71,31 @@ document.querySelectorAll('.faq-answer').forEach(answer => {
   }
 });
 
+// Ouverture du popup Calendly sur les boutons de réservation
 document.addEventListener('click', function(e) {
-  var link = e.target.closest('a[href*="calendar.app.google"]');
+  var link = e.target.closest('a[href*="calendly.com"]');
   if (!link) return;
 
-  // GA4 event
+  // GA4 — mesure de l'intérêt, à chaque clic (inchangé)
   gtag('event', 'reservation_click', {
     'event_category': 'CTA',
     'event_label': 'Rencontre_gratuite_30min',
     'value': 1
   });
 
-  // Google Ads conversion — une seule fois par visite, peu importe combien de boutons sont cliqués
-  if (!sessionStorage.getItem('ads_conversion_sent')) {
-    sessionStorage.setItem('ads_conversion_sent', '1');
+  // Si le widget Calendly n'est pas encore chargé, on laisse le lien normal s'ouvrir en secours
+  if (typeof Calendly === 'undefined') return;
+
+  e.preventDefault();
+  Calendly.initPopupWidget({ url: link.href });
+});
+
+// Conversion Google Ads — uniquement à la confirmation réelle d'un rendez-vous Calendly
+window.addEventListener('message', function(e) {
+  if (e.origin !== 'https://calendly.com') return;
+  if (!e.data || typeof e.data.event !== 'string' || e.data.event.indexOf('calendly.') !== 0) return;
+
+  if (e.data.event === 'calendly.event_scheduled') {
     gtag('event', 'conversion', {
       'send_to': 'AW-18323534468/F1mpCKzgtNAcEITlq6FE',
       'value': 1.0,
