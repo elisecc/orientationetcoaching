@@ -614,6 +614,24 @@ button.btn { border: none; cursor: pointer; appearance: none; font-family: var(-
   letter-spacing: -0.02em;
 }
 
+.tarif-price-note {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+  margin-top: 6px;
+}
+
+.tarif-followup-note {
+  text-align: center;
+  font-size: 13.5px;
+  color: var(--text-muted);
+  font-weight: 400;
+  margin: 16px auto 0;
+  max-width: 480px;
+  line-height: 1.6;
+}
+
 .tarif-divider {
   width: 40px;
   height: 2px;
@@ -882,6 +900,11 @@ button.btn { border: none; cursor: pointer; appearance: none; font-family: var(-
   grid-template-columns: 1fr 1fr;
   gap: 28px;
   margin-top: 48px;
+}
+.temoignages-grid .temoignage-card:nth-child(3):last-child {
+  grid-column: 1 / -1;
+  max-width: 600px;
+  margin: 0 auto;
 }
 .temoignage-card {
   background: var(--off-white);
