@@ -2,87 +2,56 @@
   'use strict';
 
   /* ============================================================
-     ENREGISTREMENT DES RÉSULTATS DU QUIZ — GOOGLE SHEET
+     COMPTEUR QUOTIDIEN DU QUIZ — GOOGLE APPS SCRIPT
      ================================================================
-     Chaque quiz complété est enregistré dans un Google Sheet.
-     AUCUN courriel individuel n'est envoyé ici — un sommaire
-     quotidien groupé est envoyé séparément par Google Apps Script
-     (voir configuration complète ci-dessous).
+     Chaque quiz complété incrémente un compteur (pas de courriel
+     individuel, pas de feuille de calcul à gérer). Un seul courriel
+     est envoyé à minuit avec le nombre de personnes qui ont répondu
+     depuis la veille, puis le compteur repart à zéro. S'il n'y a eu
+     personne, aucun courriel n'est envoyé.
 
-     CONFIGURATION (à faire une seule fois) :
+     CONFIGURATION (à faire une seule fois, ~5 minutes) :
 
-     1. Créer un Google Sheet, et sur la première ligne (en-têtes),
-        écrire dans les colonnes A à I :
-        Horodatage | Nom | Courriel | Profil | Résultat | Réponses
-        | Scores | Page | Envoyé
+     1. Aller sur script.google.com → Nouveau projet.
 
-     2. Dans ce Sheet : Extensions → Apps Script. Remplacer tout le
-        contenu par le code ci-dessous, puis l'enregistrer.
+     2. Remplacer tout le contenu par le code ci-dessous, puis
+        l'enregistrer (icône disquette).
 
-        var SHEET_NAME  = 'Feuille 1';           // nom exact de l'onglet
-        var DEST_EMAIL  = 'elisecc@orientationetcoaching.com';
+        var DEST_EMAIL = 'elisecc@orientationetcoaching.com';
 
         function doPost(e) {
-          var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
-          var data = JSON.parse(e.postData.contents);
-
-          sheet.appendRow([
-            new Date(),
-            data.nom || '',
-            data.courriel || '',
-            data.profileTitle || '',
-            data.result || '',
-            Array.isArray(data.answers) ? data.answers.join(' | ') : (data.answers || ''),
-            data.scores ? ('Orientation:' + data.scores.voie +
-                            ' Transition:' + data.scores.clarifier +
-                            ' Emploi:' + data.scores.emploi) : '',
-            data.pageUrl || '',
-            false
-          ]);
-
+          var lock = LockService.getScriptLock();
+          lock.waitLock(5000);
+          try {
+            var props = PropertiesService.getScriptProperties();
+            var compteur = Number(props.getProperty('compteur') || '0');
+            props.setProperty('compteur', String(compteur + 1));
+          } finally {
+            lock.releaseLock();
+          }
           return ContentService
             .createTextOutput(JSON.stringify({ status: 'ok' }))
             .setMimeType(ContentService.MimeType.JSON);
         }
 
         function envoyerSommaireQuotidien() {
-          var sheet  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
-          var values = sheet.getDataRange().getValues();
-          var lignesAEnvoyer = [];
-
-          for (var i = 1; i < values.length; i++) {   // i=0 est la ligne d'en-têtes
-            if (!values[i][8]) {                        // colonne I = Envoyé
-              lignesAEnvoyer.push({ numeroLigne: i + 1, valeurs: values[i] });
-            }
-          }
-          if (lignesAEnvoyer.length === 0) return;      // rien de neuf : aucun courriel
-
-          var corps = lignesAEnvoyer.map(function (l) {
-            var v = l.valeurs;
-            var heure = Utilities.formatDate(new Date(v[0]), 'America/Toronto', 'yyyy-MM-dd HH:mm');
-            return 'Heure : ' + heure +
-                   '\nNom : ' + (v[1] || 'Non recueilli') +
-                   '\nCourriel : ' + (v[2] || 'Non recueilli') +
-                   '\nProfil : ' + v[3] +
-                   '\nRésultat : ' + v[4] +
-                   '\nRéponses : ' + v[5] +
-                   '\nScores : ' + v[6];
-          }).join('\n\n---\n\n');
+          var props    = PropertiesService.getScriptProperties();
+          var compteur = Number(props.getProperty('compteur') || '0');
+          if (compteur === 0) return;   // personne aujourd'hui : aucun courriel
 
           MailApp.sendEmail({
             to: DEST_EMAIL,
-            subject: 'Sommaire quotidien du quiz — ' + lignesAEnvoyer.length +
-                     (lignesAEnvoyer.length > 1 ? ' complétions' : ' complétion'),
-            body: corps
+            subject: 'Quiz — ' + compteur + (compteur > 1 ? ' réponses' : ' réponse') + ' aujourd\'hui',
+            body: compteur + (compteur > 1 ? ' personnes ont' : ' personne a') +
+                  ' complété le quiz d\'orientation depuis hier.'
           });
 
-          lignesAEnvoyer.forEach(function (l) {
-            sheet.getRange(l.numeroLigne, 9).setValue(true);  // marque comme envoyé
-          });
+          props.setProperty('compteur', '0');   // remise à zéro pour demain
         }
 
         // À exécuter UNE SEULE FOIS manuellement (bouton ▶ dans l'éditeur),
-        // pour installer le déclencheur quotidien. Ne pas réexécuter ensuite.
+        // pour installer l'envoi automatique quotidien. Ne pas réexécuter
+        // ensuite, sinon plusieurs courriels seront envoyés chaque jour.
         function installerDeclencheurQuotidien() {
           ScriptApp.newTrigger('envoyerSommaireQuotidien')
             .timeBased()
@@ -94,32 +63,28 @@
 
      3. Dans l'éditeur Apps Script : icône ⚙ Paramètres du projet →
         Fuseau horaire → choisir « (GMT-05:00) Heure de l'Est - Toronto ».
-        Important : sans ce réglage, le déclencheur ne se déclenchera
-        pas à minuit heure de Montréal.
+        Important : sans ce réglage, l'envoi ne se fera pas à minuit
+        heure de Montréal.
 
-     4. Exécuter une fois la fonction installerDeclencheurQuotidien
-        (sélectionner la fonction dans le menu déroulant, puis ▶).
-        Autoriser les permissions demandées. C'est ce qui crée
-        l'envoi automatique quotidien — à ne faire qu'une seule fois.
+     4. Dans le menu déroulant des fonctions (en haut), choisir
+        installerDeclencheurQuotidien, puis cliquer ▶ une seule fois.
+        Autoriser les permissions demandées. C'est ce qui active
+        l'envoi automatique quotidien.
 
      5. Déployer → Nouveau déploiement → Application Web.
         Exécuter en tant que : Moi — Accès : Tout le monde.
         Copier l'URL fournie et la coller dans QUIZ_LOG_URL ci-dessous.
 
      Note : Google ne garantit pas la précision à la minute près pour
-     les déclencheurs programmés — l'envoi se fait généralement dans
-     les ~15 minutes suivant minuit.
+     les envois programmés — ça arrive généralement dans les ~15
+     minutes suivant minuit.
   ============================================================ */
-  var QUIZ_LOG_URL = '';
+  var QUIZ_LOG_URL = 'https://script.google.com/macros/s/AKfycbyynKK_uTOLWK0WWpPR5MxUAH1nwX3erFUb-pP31BmJqftIhVnbVkW8tia6kv-LhI_i/exec';
 
-  function submitQuizResultsToSheet(payload) {
+  function signalerQuizComplete() {
     if (!QUIZ_LOG_URL) return;
     try {
-      fetch(QUIZ_LOG_URL, {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      }).catch(function () {});
+      fetch(QUIZ_LOG_URL, { method: 'POST' }).catch(function () {});
     } catch (err) {
       // Ne jamais bloquer l'affichage du résultat
     }
@@ -396,16 +361,8 @@
         'event_label': 'Quiz_carriere_complet'
       });
 
-      // ── Envoyer les résultats vers Google Sheets ──────────────
-      submitQuizResultsToSheet({
-        timestamp:    new Date().toLocaleString('fr-CA'),
-        result:       this.resultKey,
-        profileTitle: data.profileTitle,
-        answers:      this.answers,
-        scores:       this.scores,
-        pageUrl:      window.location.href,
-        userAgent:    navigator.userAgent
-      });
+      // ── Signaler la complétion pour le compteur quotidien ─────
+      signalerQuizComplete();
 
       this.$fill.style.width  = '100%';
       this.$label.textContent = 'Votre résultat est prêt ✓';
