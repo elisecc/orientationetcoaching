@@ -1776,6 +1776,9 @@ button.btn { border: none; cursor: pointer; appearance: none; font-family: var(-
   flex-direction: column;
   gap: 20px;
 }
+.contact-form[hidden] {
+  display: none;
+}
 .contact-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1873,6 +1876,41 @@ button.btn { border: none; cursor: pointer; appearance: none; font-family: var(-
   font-size: 16px;
   color: var(--text-muted);
   line-height: 1.7;
+}
+
+.contact-error {
+  text-align: center;
+  padding: 64px 32px;
+}
+.contact-error-icon {
+  width: 56px;
+  height: 56px;
+  background: #D9584A;
+  color: var(--white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 auto 24px;
+}
+.contact-error-title {
+  font-family: var(--font-heading);
+  font-size: clamp(20px, 2.5vw, 26px);
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 12px;
+}
+.contact-error-text {
+  font-size: 16px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+.contact-error-text a {
+  color: var(--text-dark);
+  text-decoration-color: var(--gold);
 }
 
 /* ============================================

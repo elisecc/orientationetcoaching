@@ -666,8 +666,15 @@
 
           <div class="contact-success" id="contact-success" hidden>
             <div class="contact-success-icon" aria-hidden="true">✓</div>
-            <h3 class="contact-success-title">Merci pour votre message.</h3>
-            <p class="contact-success-text">Je vous répondrai dès que possible.</p>
+            <h3 class="contact-success-title">Merci pour votre message! Celui-ci a bien été envoyé.</h3>
+            <p class="contact-success-text">Je vous répondrai par courriel dans les plus brefs délais. Pensez également à vérifier vos courriels indésirables afin de ne pas manquer ma réponse.</p>
+          </div>
+
+          <div class="contact-error" id="contact-error" hidden>
+            <div class="contact-error-icon" aria-hidden="true">!</div>
+            <h3 class="contact-error-title">L'envoi n'a pas fonctionné.</h3>
+            <p class="contact-error-text">Une erreur est survenue et votre message n'a pas pu être envoyé. Vous pouvez réessayer, ou m'écrire directement à <a href="mailto:elisecc@orientationetcoaching.com">elisecc@orientationetcoaching.com</a>.</p>
+            <button type="button" class="btn btn-ghost contact-retry-btn">Réessayer</button>
           </div>
         </div>
       </div>
@@ -749,7 +756,19 @@
 
     var form       = document.getElementById('contact-form');
     var successBox = document.getElementById('contact-success');
-    if (!form || !successBox) return;
+    var errorBox   = document.getElementById('contact-error');
+    if (!form || !successBox || !errorBox) return;
+
+    var retryBtn = errorBox.querySelector('.contact-retry-btn');
+    if (retryBtn) {
+      retryBtn.addEventListener('click', function () {
+        errorBox.hidden = true;
+        form.hidden = false;
+        var btn = form.querySelector('.contact-submit');
+        btn.disabled = false;
+        btn.textContent = 'Envoyer mon message →';
+      });
+    }
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -771,12 +790,20 @@
 
       function showSuccess() {
         form.hidden = true;
+        errorBox.hidden = true;
         successBox.hidden = false;
         successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
         gtag('event', 'form_submit', {
           'event_category': 'Contact',
           'event_label': 'Formulaire_contact'
         });
+      }
+
+      function showError() {
+        form.hidden = true;
+        successBox.hidden = true;
+        errorBox.hidden = false;
+        errorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
 
       if (!CONTACT_URL) { showSuccess(); return; }
@@ -795,8 +822,17 @@
           _subject: 'Nouveau message – ' + form.querySelector('[name="motif"]').value
         })
       })
-      .then(showSuccess)
-      .catch(showSuccess);
+      .then(function (response) {
+        if (!response.ok) throw new Error('Échec HTTP ' + response.status);
+        return response.json().catch(function () { return {}; });
+      })
+      .then(function (data) {
+        if (data && (data.success === false || data.success === 'false')) {
+          throw new Error('Échec signalé par le service d\'envoi');
+        }
+        showSuccess();
+      })
+      .catch(showError);
     });
   })();
   </script>

@@ -2,30 +2,123 @@
   'use strict';
 
   /* ============================================================
-     ENVOI DES RÉSULTATS PAR COURRIEL — FORMSUBMIT
-     Chaque quiz complété envoie un courriel à l'adresse ci-dessous.
-     Aucune configuration supplémentaire requise.
+     ENREGISTREMENT DES RÉSULTATS DU QUIZ — GOOGLE SHEET
+     ================================================================
+     Chaque quiz complété est enregistré dans un Google Sheet.
+     AUCUN courriel individuel n'est envoyé ici — un sommaire
+     quotidien groupé est envoyé séparément par Google Apps Script
+     (voir configuration complète ci-dessous).
+
+     CONFIGURATION (à faire une seule fois) :
+
+     1. Créer un Google Sheet, et sur la première ligne (en-têtes),
+        écrire dans les colonnes A à I :
+        Horodatage | Nom | Courriel | Profil | Résultat | Réponses
+        | Scores | Page | Envoyé
+
+     2. Dans ce Sheet : Extensions → Apps Script. Remplacer tout le
+        contenu par le code ci-dessous, puis l'enregistrer.
+
+        var SHEET_NAME  = 'Feuille 1';           // nom exact de l'onglet
+        var DEST_EMAIL  = 'elisecc@orientationetcoaching.com';
+
+        function doPost(e) {
+          var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
+          var data = JSON.parse(e.postData.contents);
+
+          sheet.appendRow([
+            new Date(),
+            data.nom || '',
+            data.courriel || '',
+            data.profileTitle || '',
+            data.result || '',
+            Array.isArray(data.answers) ? data.answers.join(' | ') : (data.answers || ''),
+            data.scores ? ('Orientation:' + data.scores.voie +
+                            ' Transition:' + data.scores.clarifier +
+                            ' Emploi:' + data.scores.emploi) : '',
+            data.pageUrl || '',
+            false
+          ]);
+
+          return ContentService
+            .createTextOutput(JSON.stringify({ status: 'ok' }))
+            .setMimeType(ContentService.MimeType.JSON);
+        }
+
+        function envoyerSommaireQuotidien() {
+          var sheet  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
+          var values = sheet.getDataRange().getValues();
+          var lignesAEnvoyer = [];
+
+          for (var i = 1; i < values.length; i++) {   // i=0 est la ligne d'en-têtes
+            if (!values[i][8]) {                        // colonne I = Envoyé
+              lignesAEnvoyer.push({ numeroLigne: i + 1, valeurs: values[i] });
+            }
+          }
+          if (lignesAEnvoyer.length === 0) return;      // rien de neuf : aucun courriel
+
+          var corps = lignesAEnvoyer.map(function (l) {
+            var v = l.valeurs;
+            var heure = Utilities.formatDate(new Date(v[0]), 'America/Toronto', 'yyyy-MM-dd HH:mm');
+            return 'Heure : ' + heure +
+                   '\nNom : ' + (v[1] || 'Non recueilli') +
+                   '\nCourriel : ' + (v[2] || 'Non recueilli') +
+                   '\nProfil : ' + v[3] +
+                   '\nRésultat : ' + v[4] +
+                   '\nRéponses : ' + v[5] +
+                   '\nScores : ' + v[6];
+          }).join('\n\n---\n\n');
+
+          MailApp.sendEmail({
+            to: DEST_EMAIL,
+            subject: 'Sommaire quotidien du quiz — ' + lignesAEnvoyer.length +
+                     (lignesAEnvoyer.length > 1 ? ' complétions' : ' complétion'),
+            body: corps
+          });
+
+          lignesAEnvoyer.forEach(function (l) {
+            sheet.getRange(l.numeroLigne, 9).setValue(true);  // marque comme envoyé
+          });
+        }
+
+        // À exécuter UNE SEULE FOIS manuellement (bouton ▶ dans l'éditeur),
+        // pour installer le déclencheur quotidien. Ne pas réexécuter ensuite.
+        function installerDeclencheurQuotidien() {
+          ScriptApp.newTrigger('envoyerSommaireQuotidien')
+            .timeBased()
+            .atHour(0)
+            .nearMinute(0)
+            .everyDays(1)
+            .create();
+        }
+
+     3. Dans l'éditeur Apps Script : icône ⚙ Paramètres du projet →
+        Fuseau horaire → choisir « (GMT-05:00) Heure de l'Est - Toronto ».
+        Important : sans ce réglage, le déclencheur ne se déclenchera
+        pas à minuit heure de Montréal.
+
+     4. Exécuter une fois la fonction installerDeclencheurQuotidien
+        (sélectionner la fonction dans le menu déroulant, puis ▶).
+        Autoriser les permissions demandées. C'est ce qui crée
+        l'envoi automatique quotidien — à ne faire qu'une seule fois.
+
+     5. Déployer → Nouveau déploiement → Application Web.
+        Exécuter en tant que : Moi — Accès : Tout le monde.
+        Copier l'URL fournie et la coller dans QUIZ_LOG_URL ci-dessous.
+
+     Note : Google ne garantit pas la précision à la minute près pour
+     les déclencheurs programmés — l'envoi se fait généralement dans
+     les ~15 minutes suivant minuit.
   ============================================================ */
-  var QUIZ_EMAIL = 'elisecc@orientationetcoaching.com';
+  var QUIZ_LOG_URL = '';
 
   function submitQuizResultsToSheet(payload) {
-    if (!QUIZ_EMAIL) return;
+    if (!QUIZ_LOG_URL) return;
     try {
-      fetch('https://formsubmit.co/ajax/' + QUIZ_EMAIL, {
+      fetch(QUIZ_LOG_URL, {
         method:  'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({
-          _subject:  'Quiz — ' + payload.profileTitle,
-          _captcha:  'false',
-          Profil:    payload.profileTitle,
-          Resultat:  payload.result,
-          Date:      payload.timestamp,
-          Reponses:  Array.isArray(payload.answers) ? payload.answers.join(' | ') : payload.answers,
-          Scores:    'Orientation:' + payload.scores.voie +
-                     ' Transition:' + payload.scores.clarifier +
-                     ' Emploi:' + payload.scores.emploi,
-          Page:      payload.pageUrl
-        })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
       }).catch(function () {});
     } catch (err) {
       // Ne jamais bloquer l'affichage du résultat
