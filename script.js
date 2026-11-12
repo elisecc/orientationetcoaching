@@ -87,7 +87,9 @@ document.addEventListener('click', function(e) {
   if (typeof Calendly === 'undefined') return;
 
   e.preventDefault();
-  Calendly.initPopupWidget({ url: link.href });
+  var url = new URL(link.href);
+  url.searchParams.set('hide_event_type_details', '1');
+  Calendly.initPopupWidget({ url: url.toString() });
 });
 
 // Conversion Google Ads — uniquement à la confirmation réelle d'un rendez-vous Calendly
